@@ -53,7 +53,7 @@ export default function SignUp() {
           alert("Register failed! try again!")
         }
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         console.log("Error:", error);
         alert("Something went wrong!");
       });

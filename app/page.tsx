@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import { set } from "date-fns";
 
 export default function Home() {
   const router = useRouter()
@@ -14,7 +15,7 @@ export default function Home() {
           <h1 className="text-4xl font-bold tracking-tight text-gray-900">
             Welcome to&nbsp;
             <span className="bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
-              APAO
+             Yeng
             </span>
           </h1>
           <p className="text-gray-500">Your modern authentication solution</p>
@@ -24,6 +25,7 @@ export default function Home() {
           <Button
             asChild
             className="group bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500"
+          
           >
             <Link href="/login">
               Sign in to your account

@@ -1,27 +1,49 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, Mail, Loader2, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useRouter } from "next/navigation"
 
 export default function ForgotPassword() {
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [email, setEmail] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      const response = await fetch("http://localhost:5009/api/auth/forgotpassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        router.replace("/reset-password")
+        setSubmitted(true)
+        console.log("Success:", data)
+      } else {
+        // alert("Error: " + (data?.message || "Something went wrong."))
+        console.error("Error:", data?.message || "Something went wrong.")
+      }
+    } catch (error) {
+      console.error("Network error:", error)
+      // alert("Network error. Please try again.")
+    } finally {
       setLoading(false)
-      setSubmitted(true)
-    }, 1500)
+    }
   }
 
   return (

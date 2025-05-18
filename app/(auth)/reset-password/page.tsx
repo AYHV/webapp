@@ -14,15 +14,15 @@ export default function ResetPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     // Simulate API call
-    setTimeout(() => {
-      setLoading(false)
-      setSubmitted(true)
-    }, 1500)
+    console.log("Password reset request sent:", { password, confirmPassword })
+   
   }
 
   return (
@@ -69,6 +69,8 @@ export default function ResetPassword() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
                     required
                     className="pl-10 border-purple-200 focus:border-purple-500 focus:ring-purple-500"
                     placeholder="••••••••"
@@ -93,6 +95,7 @@ export default function ResetPassword() {
                   <Input
                     id="confirmPassword"
                     name="confirmPassword"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     type={showConfirmPassword ? "text" : "password"}
                     required
                     className="pl-10 border-purple-200 focus:border-purple-500 focus:ring-purple-500"
@@ -111,6 +114,7 @@ export default function ResetPassword() {
 
             <Button
               type="submit"
+              // onClick={}
               disabled={loading}
               className="w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500"
             >

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { ReduxProvider } from './ReduxProvider';
 
 export const metadata: Metadata = {
   title: 'v0 App',
@@ -15,15 +16,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="w-full border border-red-500 flex items-center justify-between">
-          <p>Apao developer</p>
-          <p>header menue</p>
-        </div>
-        {children}
-        <div className="w-full border border-red-500 text-center">
-          <p>This my Footer</p>
-        </div>
+        <ReduxProvider>
+          <div className="w-full border border-red-500 flex items-center justify-between">
+            {/* <p>Apao developer</p>
+          <p>header menue</p> */}
+          </div>
+          {children}
+          {/* <div className="w-full border border-red-500 text-center">
+            <p>This my Footer</p>
+          </div> */}
+        </ReduxProvider>
       </body>
     </html>
-  )
+  );
 }

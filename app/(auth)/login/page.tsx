@@ -1,33 +1,56 @@
 "use client"
-
-import type React from "react"
-
-import { useState } from "react"
-import Link from "next/link"
-import { ArrowLeft, Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import axios from "axios";
+import { useState } from "react";
+import Link from "next/link";
+import { ArrowLeft, Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+// import { useRouter } from "next/dist/client/router
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const route = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
-    console.log(email);
-    console.log(password);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false)
-      // window.location.href = "/"
-    }, 1500)
+    const data = JSON.stringify({
+      email,
+      password,
+    });
 
-  }
+    const config = {
+      method: 'post',
+      url: 'http://localhost:5009/api/auth/login',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then((response) => {
+        if (response.data.success) {
+          localStorage.setItem("token", response.data.token);
+          route.push("/dashboard");
+          // console.log("Login successful");
+        } else {
+          console.log("Login failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white p-4">
@@ -40,6 +63,7 @@ export default function Login() {
           <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">Welcome back</h1>
           <p className="mt-2 text-sm text-gray-500">Sign in to your account to continue</p>
         </div>
+
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="space-y-4">
             <div className="space-y-2">
@@ -115,5 +139,5 @@ export default function Login() {
         </form>
       </div>
     </div>
-  )
+  );
 }
