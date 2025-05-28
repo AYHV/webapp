@@ -222,6 +222,7 @@ export default function UserManagementPage() {
                           setCurrentUser(user);
                            setIsDeleteModalOpen(true);
                         }}
+                        href="#"
                       />
                       <FaRegEye
                         onClick={() =>
