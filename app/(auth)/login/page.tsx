@@ -39,7 +39,7 @@ export default function Login() {
         if (response.data.success) {
           localStorage.setItem("token", response.data.token);
           route.push("/dashboard");
-          // console.log("Login successful");
+          console.log("Login successful");
         } else {
           console.log("Login failed");
         }
